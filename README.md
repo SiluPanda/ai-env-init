@@ -3,6 +3,7 @@
 Bootstrap AI configuration files for every major coding tool from a single command.
 
 [![npm version](https://img.shields.io/npm/v/ai-env-init.svg)](https://www.npmjs.com/package/ai-env-init)
+[![npm downloads](https://img.shields.io/npm/dt/ai-env-init.svg)](https://www.npmjs.com/package/ai-env-init)
 [![license](https://img.shields.io/npm/l/ai-env-init.svg)](https://github.com/SiluPanda/ai-env-init/blob/master/LICENSE)
 [![node](https://img.shields.io/node/v/ai-env-init.svg)](https://nodejs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-blue.svg)](https://www.typescriptlang.org/)
