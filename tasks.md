@@ -7,18 +7,18 @@ This document breaks down all work described in SPEC.md into granular, actionabl
 ## Phase 0: Project Scaffolding and Setup
 
 - [ ] **Install runtime dependencies** — Add `@inquirer/prompts` as a runtime dependency in `package.json`. This is the only runtime dependency per spec. | Status: not_done
-- [ ] **Install dev dependencies** — Add `typescript`, `vitest`, and `eslint` as dev dependencies in `package.json` (some may already be present). Ensure versions are compatible with Node.js >=18. | Status: not_done
+- [x] **Install dev dependencies** — Add `typescript`, `vitest`, and `eslint` as dev dependencies in `package.json` (some may already be present). Ensure versions are compatible with Node.js >=18. | Status: done
 - [ ] **Add optional peer dependency** — Add `ai-rules-lint` as an optional peer dependency in `package.json` for post-generation validation. | Status: not_done
 - [ ] **Configure CLI binary** — Add the `"bin"` field to `package.json` mapping `"ai-env-init"` to `"dist/cli.js"`. | Status: not_done
 - [ ] **Create source directory structure** — Create all directories specified in the file structure: `src/detect/`, `src/questionnaire/`, `src/templates/`, `src/generate/`, `src/validate/`, `src/utils/`, and `src/__tests__/` with subdirectories (`detect/`, `questionnaire/`, `templates/`, `generate/`, `fixtures/`). | Status: not_done
-- [ ] **Create type definitions file** — Create `src/types.ts` with all TypeScript interfaces and types from the spec: `ProjectInfo`, `DetectedItem`, `ExistingAIFile`, `QuestionnaireAnswers`, `FileFormat`, `InitOptions`, `GenerateOptions`, `GeneratedFile`, `InitResult`, `ValidationResult`, `InitializerConfig`, `Initializer`. | Status: not_done
+- [x] **Create type definitions file** — Create `src/types.ts` with all TypeScript interfaces and types from the spec: `ProjectInfo`, `DetectedItem`, `ExistingAIFile`, `QuestionnaireAnswers`, `FileFormat`, `InitOptions`, `GenerateOptions`, `GeneratedFile`, `InitResult`, `ValidationResult`, `InitializerConfig`, `Initializer`. | Status: done
 
 ---
 
 ## Phase 1: Utility Modules
 
-- [ ] **Implement file reading helpers** — Create `src/utils/file.ts` with `readJsonFile` (reads and parses JSON files, returns null on error), `fileExists` (wraps `existsSync`), and `readFileContent` (reads UTF-8 text file). These are used throughout detection. | Status: not_done
-- [ ] **Implement token estimation utility** — Create `src/utils/token-estimate.ts` with a function that estimates token count as `Math.ceil(content.length / 4)`. Used in `GeneratedFile.tokens`. | Status: not_done
+- [x] **Implement file reading helpers** — Create `src/utils/file.ts` with `readJsonFile` (reads and parses JSON files, returns null on error), `fileExists` (wraps `existsSync`), and `readFileContent` (reads UTF-8 text file). These are used throughout detection. | Status: done
+- [x] **Implement token estimation utility** — Create `src/utils/token-estimate.ts` with a function that estimates token count as `Math.ceil(content.length / 4)`. Used in `GeneratedFile.tokens`. | Status: done
 - [ ] **Implement ANSI color helpers** — Create `src/utils/ansi.ts` with helpers for terminal coloring using raw ANSI escape codes (no chalk dependency). Must respect `process.stdout.isTTY` and the `NO_COLOR` environment variable. Provide helpers for bold, dim, green, yellow, red, cyan. | Status: not_done
 
 ---
@@ -27,128 +27,128 @@ This document breaks down all work described in SPEC.md into granular, actionabl
 
 ### Language Detection
 
-- [ ] **Detect TypeScript via tsconfig.json** — Check if `tsconfig.json` exists in the project root. If so, return `{ value: 'TypeScript', confidence: 'high', source: 'tsconfig.json' }`. | Status: not_done
-- [ ] **Detect TypeScript via package.json devDependencies** — Check if `package.json` has `typescript` in `devDependencies`. Return high confidence TypeScript detection. | Status: not_done
-- [ ] **Detect JavaScript via package.json** — If `package.json` exists but no TypeScript indicators are found, return `{ value: 'JavaScript', confidence: 'high', source: 'package.json' }`. | Status: not_done
-- [ ] **Detect Rust via Cargo.toml** — Check if `Cargo.toml` exists. Return high confidence Rust detection. | Status: not_done
-- [ ] **Detect Go via go.mod** — Check if `go.mod` exists. Return high confidence Go detection. | Status: not_done
-- [ ] **Detect Python via pyproject.toml/setup.py/requirements.txt** — Check for any of these files. Return high confidence Python detection. | Status: not_done
-- [ ] **Detect Ruby via Gemfile** — Check if `Gemfile` exists. Return high confidence Ruby detection. | Status: not_done
-- [ ] **Detect Java/Kotlin via pom.xml/build.gradle** — Check for `pom.xml`, `build.gradle`, or `build.gradle.kts`. Return high confidence Java/Kotlin detection. | Status: not_done
-- [ ] **Detect Swift via Package.swift or *.swift files** — Check for `Package.swift` or `.swift` files in root. Return high confidence Swift detection. | Status: not_done
-- [ ] **Detect PHP via composer.json** — Check if `composer.json` exists. Return high confidence PHP detection. | Status: not_done
+- [x] **Detect TypeScript via tsconfig.json** — Check if `tsconfig.json` exists in the project root. If so, return `{ value: 'TypeScript', confidence: 'high', source: 'tsconfig.json' }`. | Status: done
+- [x] **Detect TypeScript via package.json devDependencies** — Check if `package.json` has `typescript` in `devDependencies`. Return high confidence TypeScript detection. | Status: done
+- [x] **Detect JavaScript via package.json** — If `package.json` exists but no TypeScript indicators are found, return `{ value: 'JavaScript', confidence: 'high', source: 'package.json' }`. | Status: done
+- [x] **Detect Rust via Cargo.toml** — Check if `Cargo.toml` exists. Return high confidence Rust detection. | Status: done
+- [x] **Detect Go via go.mod** — Check if `go.mod` exists. Return high confidence Go detection. | Status: done
+- [x] **Detect Python via pyproject.toml/setup.py/requirements.txt** — Check for any of these files. Return high confidence Python detection. | Status: done
+- [x] **Detect Ruby via Gemfile** — Check if `Gemfile` exists. Return high confidence Ruby detection. | Status: done
+- [x] **Detect Java/Kotlin via pom.xml/build.gradle** — Check for `pom.xml`, `build.gradle`, or `build.gradle.kts`. Return high confidence Java/Kotlin detection. | Status: done
+- [x] **Detect Swift via Package.swift or *.swift files** — Check for `Package.swift` or `.swift` files in root. Return high confidence Swift detection. | Status: done
+- [x] **Detect PHP via composer.json** — Check if `composer.json` exists. Return high confidence PHP detection. | Status: done
 - [ ] **Detect C# via .csproj/.sln files** — Check for `*.csproj`, `*.sln`, or `.cs` files. Return high confidence C# detection. | Status: not_done
-- [ ] **Handle polyglot projects** — When multiple languages are detected, record all of them in `languages` array and set `language` to the one with the strongest signal. | Status: not_done
+- [x] **Handle polyglot projects** — When multiple languages are detected, record all of them in `languages` array and set `language` to the one with the strongest signal. | Status: done
 - [ ] **Handle unknown language** — When no recognized config files exist, return `{ value: 'Unknown', confidence: 'low', source: 'no config files' }`. | Status: not_done
-- [ ] **Create language detection module** — Create `src/detect/language.ts` that exports a function accepting a project path and returning the primary `DetectedItem<string>` and the full `DetectedItem<string>[]` array. | Status: not_done
+- [x] **Create language detection module** — Create `src/detect/language.ts` that exports a function accepting a project path and returning the primary `DetectedItem<string>` and the full `DetectedItem<string>[]` array. | Status: done
 
 ### Framework Detection
 
-- [ ] **Detect Node.js/TS frameworks from package.json** — Read `dependencies` and `devDependencies` from `package.json`. Map known dependency names to frameworks: `next` -> Next.js, `react` (without `next`) -> React, `@angular/core` -> Angular, `vue` -> Vue.js, `svelte`/`@sveltejs/kit` -> Svelte/SvelteKit, `express` -> Express.js, `fastify` -> Fastify, `koa` -> Koa, `hono` -> Hono, `@nestjs/core` -> NestJS, `nuxt` -> Nuxt, `astro` -> Astro, `remix`/`@remix-run/react` -> Remix, `gatsby` -> Gatsby, `electron` -> Electron. | Status: not_done
-- [ ] **Detect Python frameworks** — Read `pyproject.toml`, `requirements.txt`, or `setup.py` for framework dependencies: `django` -> Django, `flask` -> Flask, `fastapi` -> FastAPI, `starlette` -> Starlette. | Status: not_done
-- [ ] **Detect Ruby frameworks** — Read `Gemfile` for `rails` -> Ruby on Rails, `sinatra` -> Sinatra. | Status: not_done
-- [ ] **Detect Go frameworks** — Read `go.mod` for `github.com/gin-gonic/gin` -> Gin, `github.com/gofiber/fiber` -> Fiber, `github.com/labstack/echo` -> Echo. | Status: not_done
-- [ ] **Detect Rust frameworks** — Read `Cargo.toml` for `actix-web` -> Actix Web, `axum` -> Axum, `rocket` -> Rocket, `tauri` -> Tauri. | Status: not_done
-- [ ] **Create framework detection module** — Create `src/detect/framework.ts` exporting a function that returns `DetectedItem<string>[]`. | Status: not_done
+- [x] **Detect Node.js/TS frameworks from package.json** — Read `dependencies` and `devDependencies` from `package.json`. Map known dependency names to frameworks: `next` -> Next.js, `react` (without `next`) -> React, `@angular/core` -> Angular, `vue` -> Vue.js, `svelte`/`@sveltejs/kit` -> Svelte/SvelteKit, `express` -> Express.js, `fastify` -> Fastify, `koa` -> Koa, `hono` -> Hono, `@nestjs/core` -> NestJS, `nuxt` -> Nuxt, `astro` -> Astro, `remix`/`@remix-run/react` -> Remix, `gatsby` -> Gatsby, `electron` -> Electron. | Status: done
+- [x] **Detect Python frameworks** — Read `pyproject.toml`, `requirements.txt`, or `setup.py` for framework dependencies: `django` -> Django, `flask` -> Flask, `fastapi` -> FastAPI, `starlette` -> Starlette. | Status: done
+- [x] **Detect Ruby frameworks** — Read `Gemfile` for `rails` -> Ruby on Rails, `sinatra` -> Sinatra. | Status: done
+- [x] **Detect Go frameworks** — Read `go.mod` for `github.com/gin-gonic/gin` -> Gin, `github.com/gofiber/fiber` -> Fiber, `github.com/labstack/echo` -> Echo. | Status: done
+- [x] **Detect Rust frameworks** — Read `Cargo.toml` for `actix-web` -> Actix Web, `axum` -> Axum, `rocket` -> Rocket, `tauri` -> Tauri. | Status: done
+- [x] **Create framework detection module** — Create `src/detect/framework.ts` exporting a function that returns `DetectedItem<string>[]`. | Status: done
 
 ### Test Framework Detection
 
-- [ ] **Detect Node.js test frameworks** — Check `package.json` devDependencies and config files for: `vitest`/`vitest.config.ts` -> Vitest, `jest`/`jest.config.js` -> Jest, `mocha`/`.mocharc.yml` -> Mocha, `@playwright/test` -> Playwright, `cypress`/`cypress.config.ts` -> Cypress, `ava` -> AVA, `tap` -> tap. | Status: not_done
-- [ ] **Detect Python test frameworks** — Check for `pytest` in dependencies or `conftest.py` -> pytest. Check for `unittest` imports -> unittest (medium confidence). | Status: not_done
+- [x] **Detect Node.js test frameworks** — Check `package.json` devDependencies and config files for: `vitest`/`vitest.config.ts` -> Vitest, `jest`/`jest.config.js` -> Jest, `mocha`/`.mocharc.yml` -> Mocha, `@playwright/test` -> Playwright, `cypress`/`cypress.config.ts` -> Cypress, `ava` -> AVA, `tap` -> tap. | Status: done
+- [x] **Detect Python test frameworks** — Check for `pytest` in dependencies or `conftest.py` -> pytest. Check for `unittest` imports -> unittest (medium confidence). | Status: done
 - [ ] **Detect Go test framework** — Check for `*_test.go` files -> built-in testing package. | Status: not_done
 - [ ] **Detect Rust test framework** — Check for `tests/` directory or `#[test]` in source files -> built-in test modules. | Status: not_done
-- [ ] **Create test framework detection module** — Create `src/detect/test-framework.ts` exporting a function that returns `DetectedItem<string>[]`. | Status: not_done
+- [x] **Create test framework detection module** — Create `src/detect/test-framework.ts` exporting a function that returns `DetectedItem<string>[]`. | Status: done
 
 ### Build Tool Detection
 
-- [ ] **Detect build tools** — Check for indicator files and config: `vite.config.ts`/`vite.config.js` -> Vite, `webpack.config.js`/`webpack.config.ts` -> webpack, `esbuild` in package.json scripts -> esbuild (medium), `rollup.config.js` -> Rollup, `turbo.json` -> Turborepo, `tsconfig.json` with `outDir` + `tsc` in build script -> tsc, `next.config.js`/`next.config.ts` -> Next.js bundler, `Makefile` -> Make (medium), `Dockerfile` -> Docker (medium). | Status: not_done
-- [ ] **Create build tool detection module** — Create `src/detect/build-tool.ts` exporting a function that returns `DetectedItem<string>[]`. | Status: not_done
+- [x] **Detect build tools** — Check for indicator files and config: `vite.config.ts`/`vite.config.js` -> Vite, `webpack.config.js`/`webpack.config.ts` -> webpack, `esbuild` in package.json scripts -> esbuild (medium), `rollup.config.js` -> Rollup, `turbo.json` -> Turborepo, `tsconfig.json` with `outDir` + `tsc` in build script -> tsc, `next.config.js`/`next.config.ts` -> Next.js bundler, `Makefile` -> Make (medium), `Dockerfile` -> Docker (medium). | Status: done
+- [x] **Create build tool detection module** — Create `src/detect/build-tool.ts` exporting a function that returns `DetectedItem<string>[]`. | Status: done
 
 ### Linting and Formatting Detection
 
-- [ ] **Detect linting/formatting tools** — Check for config files and dependencies: `.eslintrc.*`/`eslint.config.*`/`eslint` in devDeps -> ESLint, `.prettierrc.*`/`prettier` in devDeps -> Prettier, `biome.json`/`@biomejs/biome` -> Biome, `oxlint`/`.oxlintrc.json` -> oxlint, `.editorconfig` -> EditorConfig, `dprint.json` -> dprint, `.stylintrc` -> Stylelint, `ruff` in pyproject.toml -> Ruff, `.rubocop.yml` -> RuboCop, `golangci-lint` in Makefile/`.golangci.yml` -> golangci-lint, `clippy` in Cargo.toml/CI -> Clippy (medium). | Status: not_done
-- [ ] **Create linter detection module** — Create `src/detect/linter.ts` exporting a function that returns `DetectedItem<string>[]`. | Status: not_done
+- [x] **Detect linting/formatting tools** — Check for config files and dependencies: `.eslintrc.*`/`eslint.config.*`/`eslint` in devDeps -> ESLint, `.prettierrc.*`/`prettier` in devDeps -> Prettier, `biome.json`/`@biomejs/biome` -> Biome, `oxlint`/`.oxlintrc.json` -> oxlint, `.editorconfig` -> EditorConfig, `dprint.json` -> dprint, `.stylintrc` -> Stylelint, `ruff` in pyproject.toml -> Ruff, `.rubocop.yml` -> RuboCop, `golangci-lint` in Makefile/`.golangci.yml` -> golangci-lint, `clippy` in Cargo.toml/CI -> Clippy (medium). | Status: done
+- [x] **Create linter detection module** — Create `src/detect/linter.ts` exporting a function that returns `DetectedItem<string>[]`. | Status: done
 
 ### Package Manager Detection
 
-- [ ] **Detect package manager from lockfiles** — Check for lockfiles in priority order: `pnpm-lock.yaml` -> pnpm, `yarn.lock` -> Yarn, `bun.lockb`/`bun.lock` -> Bun, `package-lock.json` -> npm. Fallback: `package.json` exists with no lockfile -> npm (low confidence). | Status: not_done
-- [ ] **Create package manager detection module** — Create `src/detect/package-manager.ts` exporting a function that returns `DetectedItem<string> | null`. | Status: not_done
+- [x] **Detect package manager from lockfiles** — Check for lockfiles in priority order: `pnpm-lock.yaml` -> pnpm, `yarn.lock` -> Yarn, `bun.lockb`/`bun.lock` -> Bun, `package-lock.json` -> npm. Fallback: `package.json` exists with no lockfile -> npm (low confidence). | Status: done
+- [x] **Create package manager detection module** — Create `src/detect/package-manager.ts` exporting a function that returns `DetectedItem<string> | null`. | Status: done
 
 ### Module System Detection
 
-- [ ] **Detect module system** — Check `"type"` field in `package.json` (`"module"` -> ESM, `"commonjs"` -> CommonJS). Check `"module"` field in `tsconfig.json` (`"esnext"`/`"nodenext"` -> ESM, `"commonjs"` -> CommonJS). Fallback: no explicit type -> CommonJS (low confidence). | Status: not_done
-- [ ] **Create module system detection module** — Create `src/detect/module-system.ts` exporting a function that returns `DetectedItem<string> | null`. | Status: not_done
+- [x] **Detect module system** — Check `"type"` field in `package.json` (`"module"` -> ESM, `"commonjs"` -> CommonJS). Check `"module"` field in `tsconfig.json` (`"esnext"`/`"nodenext"` -> ESM, `"commonjs"` -> CommonJS). Fallback: no explicit type -> CommonJS (low confidence). | Status: done
+- [x] **Create module system detection module** — Create `src/detect/module-system.ts` exporting a function that returns `DetectedItem<string> | null`. | Status: done
 
 ### Monorepo Detection
 
-- [ ] **Detect monorepo tools** — Check for: `"workspaces"` in package.json -> npm/Yarn workspaces, `pnpm-workspace.yaml` -> pnpm workspaces, `turbo.json` -> Turborepo, `nx.json` -> Nx, `lerna.json` -> Lerna. | Status: not_done
-- [ ] **Enumerate workspace packages** — When a monorepo is detected, read the workspaces configuration and resolve glob patterns to actual package directories. Return the list of package paths. | Status: not_done
-- [ ] **Create monorepo detection module** — Create `src/detect/monorepo.ts` exporting a function that returns `{ tool: DetectedItem<string>, packages: string[] } | null`. | Status: not_done
+- [x] **Detect monorepo tools** — Check for: `"workspaces"` in package.json -> npm/Yarn workspaces, `pnpm-workspace.yaml` -> pnpm workspaces, `turbo.json` -> Turborepo, `nx.json` -> Nx, `lerna.json` -> Lerna. | Status: done
+- [x] **Enumerate workspace packages** — When a monorepo is detected, read the workspaces configuration and resolve glob patterns to actual package directories. Return the list of package paths. | Status: done
+- [x] **Create monorepo detection module** — Create `src/detect/monorepo.ts` exporting a function that returns `{ tool: DetectedItem<string>, packages: string[] } | null`. | Status: done
 
 ### Git Configuration Detection
 
-- [ ] **Detect git initialization** — Check if `.git/` directory exists. | Status: not_done
-- [ ] **Detect remote URL and hosting platform** — Read `.git/config` for `[remote "origin"]` URL. Determine host: GitHub, GitLab, Bitbucket, or other. | Status: not_done
+- [x] **Detect git initialization** — Check if `.git/` directory exists. | Status: done
+- [x] **Detect remote URL and hosting platform** — Read `.git/config` for `[remote "origin"]` URL. Determine host: GitHub, GitLab, Bitbucket, or other. | Status: done
 - [ ] **Detect commit message convention** — Analyze the last 20 commit messages for patterns: `feat:`, `fix:`, `chore:` (conventional commits), `[TAG]` prefixes, or freeform. Return with medium confidence. | Status: not_done
-- [ ] **Detect GitHub project indicators** — Check for `.github/` directory existence. | Status: not_done
-- [ ] **Detect GitLab project indicators** — Check for `.gitlab-ci.yml` existence. | Status: not_done
-- [ ] **Detect Husky and lint-staged** — Check for `.husky/` directory and `lint-staged` in `package.json`. | Status: not_done
-- [ ] **Create git detection module** — Create `src/detect/git.ts` exporting a function that returns the git info shape from `ProjectInfo.git`. | Status: not_done
+- [x] **Detect GitHub project indicators** — Check for `.github/` directory existence. | Status: done
+- [x] **Detect GitLab project indicators** — Check for `.gitlab-ci.yml` existence. | Status: done
+- [x] **Detect Husky and lint-staged** — Check for `.husky/` directory and `lint-staged` in `package.json`. | Status: done
+- [x] **Create git detection module** — Create `src/detect/git.ts` exporting a function that returns the git info shape from `ProjectInfo.git`. | Status: done
 
 ### Directory Structure Detection
 
-- [ ] **Detect common directories** — Check for existence of: `src/`, `lib/`, `app/`, `tests/`/`test/`/`__tests__`/`src/__tests__/`, `docs/`, `scripts/`, `config/`/`.config/`, `public/`/`static/`, `pages/`, `components/`/`src/components/`. Map to the `directories` field in `ProjectInfo`. | Status: not_done
-- [ ] **Create directory structure detection module** — Create `src/detect/directories.ts` exporting a function that returns the directories shape from `ProjectInfo.directories`. | Status: not_done
+- [x] **Detect common directories** — Check for existence of: `src/`, `lib/`, `app/`, `tests/`/`test/`/`__tests__`/`src/__tests__/`, `docs/`, `scripts/`, `config/`/`.config/`, `public/`/`static/`, `pages/`, `components/`/`src/components/`. Map to the `directories` field in `ProjectInfo`. | Status: done
+- [x] **Create directory structure detection module** — Create `src/detect/directories.ts` exporting a function that returns the directories shape from `ProjectInfo.directories`. | Status: done
 
 ### Existing AI File Detection
 
-- [ ] **Detect existing AI instruction files** — Check for the existence of all supported output files: `CLAUDE.md`, `.cursorrules`, `AGENTS.md`, `.github/copilot-instructions.md`, `GEMINI.md`, `.windsurfrules`, `.clinerules`, `.mcp.json`. For each found file, record format, absolute path, and file size. | Status: not_done
-- [ ] **Create existing file detection module** — Create `src/detect/existing-files.ts` exporting a function that returns `ExistingAIFile[]`. | Status: not_done
+- [x] **Detect existing AI instruction files** — Check for the existence of all supported output files: `CLAUDE.md`, `.cursorrules`, `AGENTS.md`, `.github/copilot-instructions.md`, `GEMINI.md`, `.windsurfrules`, `.clinerules`, `.mcp.json`. For each found file, record format, absolute path, and file size. | Status: done
+- [x] **Create existing file detection module** — Create `src/detect/existing-files.ts` exporting a function that returns `ExistingAIFile[]`. | Status: done
 
 ### Detection Orchestrator
 
-- [ ] **Create detection entry point** — Create `src/detect/index.ts` that runs all detector modules and assembles the full `ProjectInfo` object. Also extract `name` from `package.json`/`Cargo.toml`/`go.mod` and `description` from `package.json`. Include `nodeVersion` from `package.json` `engines` field. | Status: not_done
-- [ ] **Export detect() API function** — Export `detect(projectPath: string): Promise<ProjectInfo>` from `src/detect/index.ts` and re-export from `src/index.ts`. | Status: not_done
+- [x] **Create detection entry point** — Create `src/detect/index.ts` that runs all detector modules and assembles the full `ProjectInfo` object. Also extract `name` from `package.json`/`Cargo.toml`/`go.mod` and `description` from `package.json`. Include `nodeVersion` from `package.json` `engines` field. | Status: done
+- [x] **Export detect() API function** — Export `detect(projectPath: string): Promise<ProjectInfo>` from `src/detect/index.ts` and re-export from `src/index.ts`. | Status: done
 
 ---
 
 ## Phase 3: Template Engine
 
-- [ ] **Implement variable interpolation** — In `src/templates/engine.ts`, implement `{{variable.path}}` replacement. Resolve dot-separated paths from the context object. Replace missing/undefined variables with empty string (no error). | Status: not_done
-- [ ] **Implement conditional blocks** — Implement `{{#if condition}}...{{/if}}` blocks. Evaluate truthiness: non-null, non-empty-string, non-empty-array values are truthy. Null, undefined, empty string, and empty array are falsy. | Status: not_done
-- [ ] **Implement else blocks** — Implement `{{#if condition}}...{{else}}...{{/if}}` support for conditional rendering with an alternative branch. | Status: not_done
-- [ ] **Implement unless blocks** — Implement `{{#unless condition}}...{{/unless}}` as the inverse of `{{#if}}`. | Status: not_done
-- [ ] **Implement iteration blocks** — Implement `{{#each array}}...{{/each}}` for iterating over arrays. Support `{{this}}` for the current element and `{{@index}}` for the zero-based index. Handle empty arrays gracefully (render nothing). | Status: not_done
-- [ ] **Implement equality helper** — Implement `{{#if (eq value1 "literal")}}` for comparing a context value against a string literal. Used for framework-specific conditional sections. | Status: not_done
-- [ ] **Implement nested conditionals** — Ensure conditionals can be nested arbitrarily (e.g., `{{#if project.framework}}{{#if (eq project.framework "Next.js")}}...{{/if}}{{/if}}`). | Status: not_done
+- [x] **Implement variable interpolation** — In `src/templates/engine.ts`, implement `{{variable.path}}` replacement. Resolve dot-separated paths from the context object. Replace missing/undefined variables with empty string (no error). | Status: done
+- [x] **Implement conditional blocks** — Implement `{{#if condition}}...{{/if}}` blocks. Evaluate truthiness: non-null, non-empty-string, non-empty-array values are truthy. Null, undefined, empty string, and empty array are falsy. | Status: done
+- [x] **Implement else blocks** — Implement `{{#if condition}}...{{else}}...{{/if}}` support for conditional rendering with an alternative branch. | Status: done
+- [x] **Implement unless blocks** — Implement `{{#unless condition}}...{{/unless}}` as the inverse of `{{#if}}`. | Status: done
+- [x] **Implement iteration blocks** — Implement `{{#each array}}...{{/each}}` for iterating over arrays. Support `{{this}}` for the current element and `{{@index}}` for the zero-based index. Handle empty arrays gracefully (render nothing). | Status: done
+- [x] **Implement equality helper** — Implement `{{#if (eq value1 "literal")}}` for comparing a context value against a string literal. Used for framework-specific conditional sections. | Status: done
+- [x] **Implement nested conditionals** — Ensure conditionals can be nested arbitrarily (e.g., `{{#if project.framework}}{{#if (eq project.framework "Next.js")}}...{{/if}}{{/if}}`). | Status: done
 - [ ] **Implement template inheritance with base directive** — Implement `{{> base}}` directive that includes the built-in template for the current format, allowing custom templates to extend the default. | Status: not_done
 - [ ] **Handle malformed templates gracefully** — Ensure unclosed blocks, invalid syntax, and other template errors produce meaningful error messages rather than crashes. | Status: not_done
-- [ ] **Create template engine module** — Create `src/templates/engine.ts` exporting a `render(template: string, context: object): string` function. Keep the engine under 200 lines as specified. | Status: not_done
+- [x] **Create template engine module** — Create `src/templates/engine.ts` exporting a `render(template: string, context: object): string` function. Keep the engine under 200 lines as specified. | Status: done
 
 ---
 
 ## Phase 4: Built-in Templates
 
-- [ ] **Create CLAUDE.md template** — Create `src/templates/claude.ts` exporting a template string constant following the spec's structure: 1) Project Overview, 2) Workflow, 3) Coding Conventions, 4) File Structure, 5) Testing, 6) Dependencies, 7) Rules. Target 1,500-3,000 tokens. Include conditional sections for framework-specific content, monorepo context, testing info, and team workflow. | Status: not_done
-- [ ] **Create .cursorrules template** — Create `src/templates/cursor.ts` with a concise template: 1) Role statement, 2) Tech stack, 3) Code style, 4) Rules. Target 800-1,500 tokens. | Status: not_done
-- [ ] **Create AGENTS.md template** — Create `src/templates/agents.ts` emphasizing scope boundaries: 1) Scope, 2) Coding standards, 3) Testing requirements, 4) Boundaries. Include safety-focused content for autonomous execution. | Status: not_done
-- [ ] **Create copilot-instructions.md template** — Create `src/templates/copilot.ts` with concise content: 1) Language and framework, 2) Code style preferences, 3) Response format. Target 500-1,000 tokens. Must be placed in `.github/` directory. | Status: not_done
-- [ ] **Create GEMINI.md template** — Create `src/templates/gemini.ts` with: 1) Project context, 2) Coding conventions, 3) Instructions. Follow Gemini's markdown consumption patterns. | Status: not_done
-- [ ] **Create .windsurfrules template** — Create `src/templates/windsurf.ts` with: 1) Project context, 2) Rules. Direct and concise format. | Status: not_done
-- [ ] **Create .clinerules template** — Create `src/templates/cline.ts` with: 1) Project overview, 2) Coding rules, 3) Workflow. Match Cline's instruction consumption patterns. | Status: not_done
-- [ ] **Create .mcp.json template** — Create `src/templates/mcp.ts` with a JSON template for MCP server configuration. Include placeholder entries for common MCP servers (filesystem, git, database). Structurally different from markdown templates. | Status: not_done
-- [ ] **Create template registry** — Create `src/templates/index.ts` that exports a function to retrieve templates by format ID. Supports built-in templates, custom template directory override (`--template-dir`), and inline template string override. Falls back from custom to built-in. | Status: not_done
+- [x] **Create CLAUDE.md template** — Create `src/templates/claude.ts` exporting a template string constant following the spec's structure: 1) Project Overview, 2) Workflow, 3) Coding Conventions, 4) File Structure, 5) Testing, 6) Dependencies, 7) Rules. Target 1,500-3,000 tokens. Include conditional sections for framework-specific content, monorepo context, testing info, and team workflow. | Status: done
+- [x] **Create .cursorrules template** — Create `src/templates/cursor.ts` with a concise template: 1) Role statement, 2) Tech stack, 3) Code style, 4) Rules. Target 800-1,500 tokens. | Status: done
+- [x] **Create AGENTS.md template** — Create `src/templates/agents.ts` emphasizing scope boundaries: 1) Scope, 2) Coding standards, 3) Testing requirements, 4) Boundaries. Include safety-focused content for autonomous execution. | Status: done
+- [x] **Create copilot-instructions.md template** — Create `src/templates/copilot.ts` with concise content: 1) Language and framework, 2) Code style preferences, 3) Response format. Target 500-1,000 tokens. Must be placed in `.github/` directory. | Status: done
+- [x] **Create GEMINI.md template** — Create `src/templates/gemini.ts` with: 1) Project context, 2) Coding conventions, 3) Instructions. Follow Gemini's markdown consumption patterns. | Status: done
+- [x] **Create .windsurfrules template** — Create `src/templates/windsurf.ts` with: 1) Project context, 2) Rules. Direct and concise format. | Status: done
+- [x] **Create .clinerules template** — Create `src/templates/cline.ts` with: 1) Project overview, 2) Coding rules, 3) Workflow. Match Cline's instruction consumption patterns. | Status: done
+- [x] **Create .mcp.json template** — Create `src/templates/mcp.ts` with a JSON template for MCP server configuration. Include placeholder entries for common MCP servers (filesystem, git, database). Structurally different from markdown templates. | Status: done
+- [x] **Create template registry** — Create `src/templates/index.ts` that exports a function to retrieve templates by format ID. Supports built-in templates, custom template directory override (`--template-dir`), and inline template string override. Falls back from custom to built-in. | Status: done
 - [ ] **Implement custom template directory loading** — In the template registry, support loading templates from a user-specified directory. Files named `claude.md.tmpl`, `cursor.md.tmpl`, etc. override built-in templates. Missing files fall back to built-in. | Status: not_done
 
 ---
 
 ## Phase 5: Template Context and Generation
 
-- [ ] **Implement template context builder** — Create `src/generate/context.ts` that merges three sources into a single template rendering context: 1) `QuestionnaireAnswers`, 2) `ProjectInfo` (from detection), 3) computed values. | Status: not_done
-- [ ] **Implement computed context values** — Compute derived values for the template context: `hasTests` (testing.framework is not null), `isMonorepo` (monorepo is not null), `isTypeScript` (language is TypeScript), `primaryFrameworkDescription` (human-readable string like "a Next.js application"), `languageSpecificPatterns` (array of patterns for the detected language). | Status: not_done
-- [ ] **Implement generate() function** — Create `src/generate/index.ts` with `generate(answers, formats, options)`. For each selected format: load the template, build the context, render the template, compute token count, determine output path and filename, check for existing file. Return `GeneratedFile[]` without writing to disk. | Status: not_done
-- [ ] **Implement output path resolution** — Map each format to its correct output path: `CLAUDE.md` at root, `.cursorrules` at root, `AGENTS.md` at root, `copilot-instructions.md` in `.github/`, `GEMINI.md` at root, `.windsurfrules` at root, `.clinerules` at root, `.mcp.json` at root. | Status: not_done
-- [ ] **Implement file writer** — Create `src/generate/writer.ts` with a function that writes `GeneratedFile[]` to disk with conflict handling: skip if exists (default), overwrite if `--force`, append if `--merge` (with horizontal rule separator and generator comment), prompt if interactive, skip with warning if non-interactive. Create `.github/` directory if needed for `copilot-instructions.md`. Write UTF-8 with trailing newline. | Status: not_done
+- [x] **Implement template context builder** — Create `src/generate/context.ts` that merges three sources into a single template rendering context: 1) `QuestionnaireAnswers`, 2) `ProjectInfo` (from detection), 3) computed values. | Status: done
+- [x] **Implement computed context values** — Compute derived values for the template context: `hasTests` (testing.framework is not null), `isMonorepo` (monorepo is not null), `isTypeScript` (language is TypeScript), `primaryFrameworkDescription` (human-readable string like "a Next.js application"), `languageSpecificPatterns` (array of patterns for the detected language). | Status: done
+- [x] **Implement generate() function** — Create `src/generate/index.ts` with `generate(answers, formats, options)`. For each selected format: load the template, build the context, render the template, compute token count, determine output path and filename, check for existing file. Return `GeneratedFile[]` without writing to disk. | Status: done
+- [x] **Implement output path resolution** — Map each format to its correct output path: `CLAUDE.md` at root, `.cursorrules` at root, `AGENTS.md` at root, `copilot-instructions.md` in `.github/`, `GEMINI.md` at root, `.windsurfrules` at root, `.clinerules` at root, `.mcp.json` at root. | Status: done
+- [x] **Implement file writer** — Create `src/generate/writer.ts` with a function that writes `GeneratedFile[]` to disk with conflict handling: skip if exists (default), overwrite if `--force`, append if `--merge` (with horizontal rule separator and generator comment), prompt if interactive, skip with warning if non-interactive. Create `.github/` directory if needed for `copilot-instructions.md`. Write UTF-8 with trailing newline. | Status: done
 - [ ] **Implement merge (append) mode** — When `--merge` is set and a file exists, append the generated content separated by a horizontal rule and a comment explaining the appended content was generated by `ai-env-init`. | Status: not_done
 - [ ] **Implement interactive conflict resolution** — When a file exists in interactive mode, prompt the developer with options: "Overwrite", "Skip", "Append", "Show diff". The diff option displays generated content alongside existing content. | Status: not_done
 
@@ -157,7 +157,7 @@ This document breaks down all work described in SPEC.md into granular, actionabl
 ## Phase 6: Interactive Questionnaire
 
 - [ ] **Define question data structures** — Create `src/questionnaire/questions.ts` with all question definitions organized by section (project basics, coding conventions, AI behavior, testing, safety, team context, output format selection). Each question has: id, prompt text, type (text/select/multi-select/confirm), options (for select/multi-select), default value source, and validation rules. | Status: not_done
-- [ ] **Implement default value computation** — Create `src/questionnaire/defaults.ts` that computes questionnaire default values from `ProjectInfo`. Map detected language to language-appropriate defaults (e.g., camelCase for JS/TS, snake_case for Python). Map detected framework to framework-appropriate error handling defaults. Map detected test framework to test command defaults. | Status: not_done
+- [x] **Implement default value computation** — Create `src/questionnaire/defaults.ts` that computes questionnaire default values from `ProjectInfo`. Map detected language to language-appropriate defaults (e.g., camelCase for JS/TS, snake_case for Python). Map detected framework to framework-appropriate error handling defaults. Map detected test framework to test command defaults. | Status: done
 - [ ] **Implement answer validation** — Create `src/questionnaire/validation.ts` with validation rules: project name must not be empty, format list must contain at least one valid format, protected paths must be valid path patterns. Return clear error messages for invalid answers. | Status: not_done
 - [ ] **Implement questionnaire runner** — Create `src/questionnaire/index.ts` that runs the interactive questionnaire using `@inquirer/prompts`. Import `@inquirer/prompts` lazily (only in interactive mode) to minimize startup time for non-interactive invocations. Present questions section by section, using detected defaults. Skip questions that have pre-filled answers from config file or API. | Status: not_done
 - [ ] **Implement project basics questions** — Implement Section 7.1: project name, description, primary language (select), framework (select with language-dependent options), additional libraries/tools (freeform text). | Status: not_done
@@ -173,10 +173,10 @@ This document breaks down all work described in SPEC.md into granular, actionabl
 
 ## Phase 7: Core Init Pipeline
 
-- [ ] **Implement init() function** — Create `src/init.ts` with the `init(options: InitOptions): Promise<InitResult>` function. Orchestrate the full pipeline: 1) detect project, 2) run questionnaire (or use defaults/config), 3) select formats, 4) render templates, 5) handle file conflicts, 6) write files, 7) validate (optional), 8) report. Return `InitResult` with detection, answers, files, written, skipped, and validation results. | Status: not_done
-- [ ] **Implement answer precedence resolution** — Implement the answer resolution order: 1) static defaults, 2) detected project info, 3) config file (`--config`), 4) CLI flags (`--format`, etc.), 5) interactive questionnaire answers. Later sources override earlier. | Status: not_done
+- [x] **Implement init() function** — Create `src/init.ts` with the `init(options: InitOptions): Promise<InitResult>` function. Orchestrate the full pipeline: 1) detect project, 2) run questionnaire (or use defaults/config), 3) select formats, 4) render templates, 5) handle file conflicts, 6) write files, 7) validate (optional), 8) report. Return `InitResult` with detection, answers, files, written, skipped, and validation results. | Status: done
+- [x] **Implement answer precedence resolution** — Implement the answer resolution order: 1) static defaults, 2) detected project info, 3) config file (`--config`), 4) CLI flags (`--format`, etc.), 5) interactive questionnaire answers. Later sources override earlier. | Status: done
 - [ ] **Implement createInitializer() factory** — Create the factory function in `src/index.ts` that returns an `Initializer` object with pre-configured formats, templates, and defaults. The returned object has `init()`, `detect()`, and `generate()` methods. | Status: not_done
-- [ ] **Wire up public API exports** — Update `src/index.ts` to export: `init`, `detect`, `generate`, `createInitializer`, and all type definitions from `src/types.ts`. | Status: not_done
+- [x] **Wire up public API exports** — Update `src/index.ts` to export: `init`, `detect`, `generate`, `createInitializer`, and all type definitions from `src/types.ts`. | Status: done
 
 ---
 
@@ -234,43 +234,43 @@ This document breaks down all work described in SPEC.md into granular, actionabl
 
 ### Detection Tests
 
-- [ ] **Test language detection** — Create `src/__tests__/detect/language.test.ts`. Test each language detection case: TypeScript via tsconfig, TypeScript via package.json, JavaScript, Rust, Go, Python, Ruby, Java/Kotlin, Swift, PHP, C#, unknown. Test polyglot detection (e.g., both TS and Python indicators). Use temp directories with fixture files. | Status: not_done
-- [ ] **Test framework detection** — Create `src/__tests__/detect/framework.test.ts`. Test Node.js framework detection for each framework (Next.js, React, Angular, etc.). Test Python frameworks. Test Ruby frameworks. Test Go frameworks. Test Rust frameworks. Test when no framework is found. | Status: not_done
-- [ ] **Test test framework detection** — Create `src/__tests__/detect/test-framework.test.ts`. Test each Node.js test framework. Test Python test frameworks. Test Go and Rust test detection. Test when no test framework is found. | Status: not_done
-- [ ] **Test build tool detection** — Create `src/__tests__/detect/build-tool.test.ts`. Test each build tool detection signal. Test medium-confidence detections (esbuild, Make, Docker). Test when no build tool is found. | Status: not_done
-- [ ] **Test linter detection** — Create `src/__tests__/detect/linter.test.ts`. Test each linting/formatting tool detection. Test multiple linters detected simultaneously. Test when no linter is found. | Status: not_done
-- [ ] **Test package manager detection** — Create `src/__tests__/detect/package-manager.test.ts`. Test each lockfile-based detection. Test fallback to npm (low confidence). Test when no package.json exists. | Status: not_done
-- [ ] **Test monorepo detection** — Create `src/__tests__/detect/monorepo.test.ts`. Test each monorepo tool detection. Test workspace package enumeration. Test when not a monorepo. | Status: not_done
-- [ ] **Test git detection** — Create `src/__tests__/detect/git.test.ts`. Test git initialization detection. Test remote URL parsing and host identification. Test commit convention detection. Test Husky/lint-staged detection. Test when no .git exists. | Status: not_done
-- [ ] **Test directory structure detection** — Create `src/__tests__/detect/directories.test.ts`. Test detection of each directory pattern (src, lib, app, tests, docs, scripts, config, public, pages, components). Test when no standard directories exist. | Status: not_done
+- [x] **Test language detection** — Create `src/__tests__/detect/language.test.ts`. Test each language detection case: TypeScript via tsconfig, TypeScript via package.json, JavaScript, Rust, Go, Python, Ruby, Java/Kotlin, Swift, PHP, C#, unknown. Test polyglot detection (e.g., both TS and Python indicators). Use temp directories with fixture files. | Status: done
+- [x] **Test framework detection** — Create `src/__tests__/detect/framework.test.ts`. Test Node.js framework detection for each framework (Next.js, React, Angular, etc.). Test Python frameworks. Test Ruby frameworks. Test Go frameworks. Test Rust frameworks. Test when no framework is found. | Status: done
+- [x] **Test test framework detection** — Create `src/__tests__/detect/test-framework.test.ts`. Test each Node.js test framework. Test Python test frameworks. Test Go and Rust test detection. Test when no test framework is found. | Status: done
+- [x] **Test build tool detection** — Create `src/__tests__/detect/build-tool.test.ts`. Test each build tool detection signal. Test medium-confidence detections (esbuild, Make, Docker). Test when no build tool is found. | Status: done
+- [x] **Test linter detection** — Create `src/__tests__/detect/linter.test.ts`. Test each linting/formatting tool detection. Test multiple linters detected simultaneously. Test when no linter is found. | Status: done
+- [x] **Test package manager detection** — Create `src/__tests__/detect/package-manager.test.ts`. Test each lockfile-based detection. Test fallback to npm (low confidence). Test when no package.json exists. | Status: done
+- [x] **Test monorepo detection** — Create `src/__tests__/detect/monorepo.test.ts`. Test each monorepo tool detection. Test workspace package enumeration. Test when not a monorepo. | Status: done
+- [x] **Test git detection** — Create `src/__tests__/detect/git.test.ts`. Test git initialization detection. Test remote URL parsing and host identification. Test commit convention detection. Test Husky/lint-staged detection. Test when no .git exists. | Status: done
+- [x] **Test directory structure detection** — Create `src/__tests__/detect/directories.test.ts`. Test detection of each directory pattern (src, lib, app, tests, docs, scripts, config, public, pages, components). Test when no standard directories exist. | Status: done
 
 ### Questionnaire Tests
 
-- [ ] **Test default value computation** — Create `src/__tests__/questionnaire/defaults.test.ts`. Test that detected TypeScript projects get camelCase default. Test that detected Python projects get snake_case default. Test that detected test frameworks map to correct test commands. Test defaults when nothing is detected. | Status: not_done
+- [x] **Test default value computation** — Create `src/__tests__/questionnaire/defaults.test.ts`. Test that detected TypeScript projects get camelCase default. Test that detected Python projects get snake_case default. Test that detected test frameworks map to correct test commands. Test defaults when nothing is detected. | Status: done
 - [ ] **Test answer validation** — Create `src/__tests__/questionnaire/validation.test.ts`. Test project name not empty validation. Test format list validation (at least one valid format). Test invalid format names are rejected. Test protected paths validation. | Status: not_done
 
 ### Template Engine Tests
 
-- [ ] **Test variable interpolation** — Create `src/__tests__/templates/engine.test.ts`. Test simple variable replacement. Test nested property paths (e.g., `project.name`). Test missing/undefined variables produce empty string. Test null values. Test array values. | Status: not_done
-- [ ] **Test conditional blocks** — Test `{{#if}}` with truthy values (non-null, non-empty string, non-empty array). Test with falsy values (null, undefined, empty string, empty array). Test `{{else}}` branch rendering. Test `{{#unless}}` blocks. | Status: not_done
-- [ ] **Test iteration blocks** — Test `{{#each}}` with arrays of strings. Test `{{this}}` and `{{@index}}` references. Test with empty arrays (renders nothing). Test with single-element arrays. | Status: not_done
-- [ ] **Test equality helper** — Test `{{#if (eq value "literal")}}` with matching and non-matching values. | Status: not_done
-- [ ] **Test nested conditionals** — Test multiple levels of nesting. Test nested conditionals with iteration. | Status: not_done
+- [x] **Test variable interpolation** — Create `src/__tests__/templates/engine.test.ts`. Test simple variable replacement. Test nested property paths (e.g., `project.name`). Test missing/undefined variables produce empty string. Test null values. Test array values. | Status: done
+- [x] **Test conditional blocks** — Test `{{#if}}` with truthy values (non-null, non-empty string, non-empty array). Test with falsy values (null, undefined, empty string, empty array). Test `{{else}}` branch rendering. Test `{{#unless}}` blocks. | Status: done
+- [x] **Test iteration blocks** — Test `{{#each}}` with arrays of strings. Test `{{this}}` and `{{@index}}` references. Test with empty arrays (renders nothing). Test with single-element arrays. | Status: done
+- [x] **Test equality helper** — Test `{{#if (eq value "literal")}}` with matching and non-matching values. | Status: done
+- [x] **Test nested conditionals** — Test multiple levels of nesting. Test nested conditionals with iteration. | Status: done
 - [ ] **Test malformed templates** — Test unclosed `{{#if}}` blocks. Test unclosed `{{#each}}` blocks. Test invalid syntax. Verify meaningful error messages. | Status: not_done
 - [ ] **Test template inheritance** — Test `{{> base}}` directive includes built-in template content. Test custom template that extends base with additional sections. | Status: not_done
 
 ### Template Rendering Tests
 
-- [ ] **Test CLAUDE.md rendering** — Create `src/__tests__/templates/claude.test.ts`. Render with minimal answers (all defaults). Render with maximal answers (everything specified). Render with different languages/frameworks to verify conditional branches. Assert output matches expected structure and content. | Status: not_done
-- [ ] **Test .cursorrules rendering** — Create `src/__tests__/templates/cursor.test.ts`. Test rendering with different project configurations. Verify output is concise (within token target). | Status: not_done
-- [ ] **Test AGENTS.md rendering** — Create `src/__tests__/templates/agents.test.ts`. Verify safety-focused content is present. Test scope constraints rendering. | Status: not_done
-- [ ] **Test copilot-instructions.md rendering** — Create `src/__tests__/templates/copilot.test.ts`. Verify concise output within token target. | Status: not_done
-- [ ] **Test .mcp.json rendering** — Create `src/__tests__/templates/mcp.test.ts`. Verify valid JSON output. Test with and without MCP server configuration. | Status: not_done
+- [x] **Test CLAUDE.md rendering** — Create `src/__tests__/templates/claude.test.ts`. Render with minimal answers (all defaults). Render with maximal answers (everything specified). Render with different languages/frameworks to verify conditional branches. Assert output matches expected structure and content. | Status: done
+- [x] **Test .cursorrules rendering** — Create `src/__tests__/templates/cursor.test.ts`. Test rendering with different project configurations. Verify output is concise (within token target). | Status: done
+- [x] **Test AGENTS.md rendering** — Create `src/__tests__/templates/agents.test.ts`. Verify safety-focused content is present. Test scope constraints rendering. | Status: done
+- [x] **Test copilot-instructions.md rendering** — Create `src/__tests__/templates/copilot.test.ts`. Verify concise output within token target. | Status: done
+- [x] **Test .mcp.json rendering** — Create `src/__tests__/templates/mcp.test.ts`. Verify valid JSON output. Test with and without MCP server configuration. | Status: done
 
 ### Generation Tests
 
-- [ ] **Test template context builder** — Create `src/__tests__/generate/context.test.ts`. Test merge of answers, detection, and computed values. Test computed value derivation (hasTests, isMonorepo, isTypeScript, etc.). Test with missing/null values. | Status: not_done
-- [ ] **Test file writer** — Create `src/__tests__/generate/writer.test.ts`. Test writing new files. Test skip-existing behavior (default). Test force-overwrite behavior. Test merge/append behavior (content separator, generator comment). Test `.github/` directory creation for copilot-instructions.md. Test error on read-only directories. Test UTF-8 encoding and trailing newline. | Status: not_done
+- [x] **Test template context builder** — Create `src/__tests__/generate/context.test.ts`. Test merge of answers, detection, and computed values. Test computed value derivation (hasTests, isMonorepo, isTypeScript, etc.). Test with missing/null values. | Status: done
+- [x] **Test file writer** — Create `src/__tests__/generate/writer.test.ts`. Test writing new files. Test skip-existing behavior (default). Test force-overwrite behavior. Test merge/append behavior (content separator, generator comment). Test `.github/` directory creation for copilot-instructions.md. Test error on read-only directories. Test UTF-8 encoding and trailing newline. | Status: done
 
 ### Config File Tests
 
@@ -282,15 +282,15 @@ This document breaks down all work described in SPEC.md into granular, actionabl
 
 ## Phase 13: Integration Tests
 
-- [ ] **Integration test: TypeScript + React project** — Create `src/__tests__/init.test.ts`. Create temp directory with TS/React fixture files. Run `init()` in non-interactive mode. Assert all generated files exist at correct paths. Assert content contains correct project info, framework mentions, and format conventions. | Status: not_done
+- [x] **Integration test: TypeScript + React project** — Create `src/__tests__/init.test.ts`. Create temp directory with TS/React fixture files. Run `init()` in non-interactive mode. Assert all generated files exist at correct paths. Assert content contains correct project info, framework mentions, and format conventions. | Status: done
 - [ ] **Integration test: Python + Django project** — Create temp directory with Python/Django fixture. Run `init()` in non-interactive mode. Assert generated files reference Python conventions, Django patterns, and pytest. | Status: not_done
 - [ ] **Integration test: Go project** — Create temp directory with Go fixture. Run `init()` in non-interactive mode. Assert generated files reference Go conventions and idiomatic Go patterns. | Status: not_done
 - [ ] **Integration test: Monorepo project** — Create temp directory with monorepo fixture. Run `init()` in non-interactive mode. Assert detection correctly identifies monorepo structure and workspace packages. Assert generated files mention monorepo context. | Status: not_done
-- [ ] **Integration test: Empty project** — Create temp directory with no config files. Run `init()` in non-interactive mode. Assert detection returns nulls/defaults. Assert generated files use generic content. Assert no errors. | Status: not_done
-- [ ] **Integration test: Existing files with --force** — Create temp project with an existing `CLAUDE.md`. Run `init()` with `force: true`. Assert the file is overwritten with new content. | Status: not_done
-- [ ] **Integration test: Existing files without --force** — Create temp project with an existing `CLAUDE.md`. Run `init()` without force. Assert the file is skipped and appears in `result.skipped`. | Status: not_done
+- [x] **Integration test: Empty project** — Create temp directory with no config files. Run `init()` in non-interactive mode. Assert detection returns nulls/defaults. Assert generated files use generic content. Assert no errors. | Status: done
+- [x] **Integration test: Existing files with --force** — Create temp project with an existing `CLAUDE.md`. Run `init()` with `force: true`. Assert the file is overwritten with new content. | Status: done
+- [x] **Integration test: Existing files without --force** — Create temp project with an existing `CLAUDE.md`. Run `init()` without force. Assert the file is skipped and appears in `result.skipped`. | Status: done
 - [ ] **Integration test: Config file mode** — Create temp project and a config file. Run `init()` with config. Assert answers from the config file appear in generated content. | Status: not_done
-- [ ] **Integration test: Selective format generation** — Run `init()` with `formats: ['claude', 'cursor']`. Assert only CLAUDE.md and .cursorrules are generated. Assert other format files do not exist. | Status: not_done
+- [x] **Integration test: Selective format generation** — Run `init()` with `formats: ['claude', 'cursor']`. Assert only CLAUDE.md and .cursorrules are generated. Assert other format files do not exist. | Status: done
 
 ---
 
@@ -334,9 +334,9 @@ This document breaks down all work described in SPEC.md into granular, actionabl
 
 ## Phase 17: Build, Lint, and CI Readiness
 
-- [ ] **Verify TypeScript compilation** — Run `npm run build` and ensure all source files compile without errors. Verify `dist/` output contains all expected `.js`, `.d.ts`, and `.js.map` files. | Status: not_done
-- [ ] **Verify ESLint passes** — Run `npm run lint` and fix any linting errors. | Status: not_done
-- [ ] **Verify all tests pass** — Run `npm run test` and ensure all unit, integration, and CLI tests pass. | Status: not_done
+- [x] **Verify TypeScript compilation** — Run `npm run build` and ensure all source files compile without errors. Verify `dist/` output contains all expected `.js`, `.d.ts`, and `.js.map` files. | Status: done
+- [x] **Verify ESLint passes** — Run `npm run lint` and fix any linting errors. | Status: done
+- [x] **Verify all tests pass** — Run `npm run test` and ensure all unit, integration, and CLI tests pass. | Status: done
 - [ ] **Verify CLI binary works end-to-end** — Run `npx . --detect-only` from the project directory. Run `npx . --yes --format claude` against a test project. Verify output and generated files. | Status: not_done
 - [ ] **Verify package.json is complete** — Ensure `name`, `version`, `description`, `main`, `types`, `bin`, `files`, `scripts`, `engines`, `license`, `keywords`, and `publishConfig` are all correctly set. | Status: not_done
 
