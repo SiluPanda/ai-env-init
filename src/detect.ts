@@ -550,7 +550,7 @@ function detectGit(dir: string): ProjectInfo['git'] {
     if (gitConfig) {
       const urlMatch = gitConfig.match(/url\s*=\s*(.+)/);
       if (urlMatch) {
-        remoteUrl = urlMatch[1].trim();
+        remoteUrl = urlMatch[1].replace(/#.*$/, '').trim();
         if (remoteUrl.includes('github.com')) host = 'github';
         else if (remoteUrl.includes('gitlab.com')) host = 'gitlab';
         else if (remoteUrl.includes('bitbucket.org')) host = 'bitbucket';

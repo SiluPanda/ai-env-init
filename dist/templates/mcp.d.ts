@@ -1,0 +1,2 @@
+export declare const MCP_TEMPLATE = "{\n  \"mcpServers\": {\n    \"filesystem\": {\n      \"command\": \"npx\",\n      \"args\": [\"-y\", \"@modelcontextprotocol/server-filesystem\", \"./\"]\n    }\n  }\n}\n";
+//# sourceMappingURL=mcp.d.ts.map

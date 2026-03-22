@@ -198,9 +198,10 @@ function processEachBlock(
     // If the element is an object, resolve nested paths
     if (typeof value[i] === 'object' && value[i] !== null) {
       const itemContext = value[i] as Record<string, unknown>;
-      item = item.replace(/\{\{([a-zA-Z_][a-zA-Z0-9_.]*)\}\}/g, (_match, path: string) => {
+      item = item.replace(/\{\{([a-zA-Z_][a-zA-Z0-9_.]*)\}\}/g, (fullMatch, path: string) => {
         const resolved = resolvePath(itemContext, path);
-        return resolved !== undefined ? String(resolved) : '';
+        if (resolved !== undefined) return String(resolved);
+        return fullMatch;
       });
     }
     lines.push(item);
